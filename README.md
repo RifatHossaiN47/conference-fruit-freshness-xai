@@ -7,16 +7,16 @@
 [![IEEE Xplore](https://img.shields.io/badge/IEEE%20Xplore-Paper%20%2311491294-blue.svg)](https://ieeexplore.ieee.org/abstract/document/11491294)
 [![DOI](https://img.shields.io/badge/DOI-10.1109%2FICCIT68739.2025.11491294-00629B.svg)](https://doi.org/10.1109/ICCIT68739.2025.11491294)
 [![Conference](https://img.shields.io/badge/Conference-ICCIT%202025-orange.svg)](https://ieeexplore.ieee.org/xpl/conhome/11489965/proceeding)
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Live%20Demo-yellow.svg)](https://huggingface.co/spaces/nahinfarhan/fruit-classifier)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-brightgreen.svg)](https://www.python.org/)
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.15%2B-FF6F00.svg)](https://www.tensorflow.org/)
-[![Streamlit](https://img.shields.io/badge/Demo-Streamlit%20Web%20App-FF4B4B.svg)](app.py)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <p align="center">
   <b>A unified, explainable deep learning framework that simultaneously identifies fruit variety and evaluates freshness state in a single forward pass.</b>
 </p>
 
-[**Read Paper on IEEE Xplore**](https://ieeexplore.ieee.org/abstract/document/11491294) • [**Interactive Demo**](#-interactive-web-application) • [**Benchmark Results**](#-comprehensive-benchmark-evaluation) • [**Explainable AI (Grad-CAM)**](#-explainable-ai-with-grad-cam) • [**Citation**](#-citation)
+[**Read on IEEE Xplore**](https://ieeexplore.ieee.org/abstract/document/11491294) • [**Read Paper (PDF)**](docs/IEEE_ICCIT2025_Conference_Paper.pdf) • [**Live Hugging Face Demo**](https://huggingface.co/spaces/nahinfarhan/fruit-classifier) • [**Benchmark Results**](#-comprehensive-benchmark-evaluation) • [**Explainable AI (Grad-CAM)**](#-explainable-ai-with-grad-cam) • [**Citation**](#-citation)
 
 </div>
 
@@ -77,7 +77,11 @@ Deep learning models deployed in food safety and supply chain automation require
 
 ## 🌐 Interactive Web Application
 
-We engineered a real-time web application using **Streamlit** (also deployed on **Hugging Face Spaces**) that supports both batch image uploads and live webcam capture.
+We engineered a real-time web application using **Streamlit** (also deployed live on **Hugging Face Spaces**) that supports both batch image uploads and live webcam capture.
+
+> 🚀 **Live Demo on Hugging Face Spaces:**  
+> Test the model instantly in your browser without any installation:  
+> 👉 **[https://huggingface.co/spaces/nahinfarhan/fruit-classifier](https://huggingface.co/spaces/nahinfarhan/fruit-classifier)**
 
 <div align="center">
   <img src="assets/web_demo_fresh.png" alt="Streamlit Web App - Fresh Prediction" width="48%">
@@ -177,6 +181,7 @@ All 9 candidate models were trained and benchmarked under identical data splits 
 │   ├── methodology_flowchart.drawio
 │   └── paper_figure_layouts.drawio
 ├── docs/                         # Conference presentation and credentials
+│   ├── IEEE_ICCIT2025_Conference_Paper.pdf  # Full Camera-Ready Research Paper
 │   ├── ICCIT2025_Conference_Certificate.pdf
 │   ├── Conference_Presentation_Slides.pptx
 │   └── Conference_Presentation_Slides.pdf
@@ -260,11 +265,13 @@ If this research or codebase assists your work, please cite our IEEE ICCIT 2025 
 
 ## 👥 Authors & Acknowledgments
 
-* **Md Rifat Hossen** ([IEEE Profile](https://ieeexplore.ieee.org/author/37089928121))
-* **Md Nahian Abdullah** ([IEEE Profile](https://ieeexplore.ieee.org/author/628425155997373))
-* **MD Nahin Farhan** ([IEEE Profile](https://ieeexplore.ieee.org/author/190924578641229))
-* **Nino Chakma** ([IEEE Profile](https://ieeexplore.ieee.org/author/334014166865499))
-* **Denesh Barua Pantho** ([IEEE Profile](https://ieeexplore.ieee.org/author/776320405692555))
+* **Md Rifat Hossen** ([IEEE Profile](https://ieeexplore.ieee.org/author/37089928121) • `rifat8851@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
+* **Md Nahian Abdullah** ([IEEE Profile](https://ieeexplore.ieee.org/author/628425155997373) • `mdnahianabdullah95@gmail.com`) — *Dept. of Electrical and Electronic Engineering, CUET*
+* **MD Nahin Farhan** ([IEEE Profile](https://ieeexplore.ieee.org/author/190924578641229) • `nahinfarhan.czs@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
+* **Nino Chakma** ([IEEE Profile](https://ieeexplore.ieee.org/author/334014166865499) • `www.nino39@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
+* **Denesh Barua Pantho** ([IEEE Profile](https://ieeexplore.ieee.org/author/776320405692555) • `pantho625@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
+
+**Institution:** Chittagong University of Engineering and Technology (CUET), Chittagong, Bangladesh.
 
 *Presented at the **2025 28th International Conference on Computer and Information Technology (ICCIT)**, Cox's Bazar, Bangladesh.*
 
