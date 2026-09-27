@@ -1,0 +1,36 @@
+# Large model weights (>100 MB exceeds GitHub file upload limits)
+models/*.keras
+models/*.h5
+models/*.weights.h5
+*.keras
+*.h5
+
+# Sensitive personal & administrative conference registration materials
+materials/
+*.student.pdf
+*.payment.pdf
+
+# Python & Jupyter artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# System & OS artifacts
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+*.log
+
+# Scratch / temporary directories
+scratch/
+.system_generated/

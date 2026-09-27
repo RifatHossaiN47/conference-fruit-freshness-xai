@@ -1,0 +1,35 @@
+cff-version: 1.2.0
+message: "If you use this work, codebase, or model weights in your research, please cite it as below."
+title: "A Multi Task Deep Learning Model for Fruit Detection and Freshness Classification with GradCAM Explainability"
+authors:
+  - family-names: "Hossen"
+    given-names: "Md Rifat"
+  - family-names: "Abdullah"
+    given-names: "Md Nahian"
+  - family-names: "Farhan"
+    given-names: "MD Nahin"
+  - family-names: "Chakma"
+    given-names: "Nino"
+  - family-names: "Pantho"
+    given-names: "Denesh Barua"
+collection-title: "2025 28th International Conference on Computer and Information Technology (ICCIT)"
+conference:
+  name: "2025 28th International Conference on Computer and Information Technology (ICCIT)"
+  location: "Cox's Bazar, Bangladesh"
+  date-start: "2025-12-19"
+  date-end: "2025-12-21"
+year: 2025
+pages: "347-352"
+publisher:
+  name: "IEEE"
+doi: "10.1109/ICCIT68739.2025.11491294"
+url: "https://ieeexplore.ieee.org/abstract/document/11491294"
+keywords:
+  - "Multi-task Deep Learning"
+  - "ResNet152V2"
+  - "Fruit Classification"
+  - "Freshness Detection"
+  - "Explainable AI"
+  - "Grad-CAM"
+  - "Computer Vision"
+  - "Food Quality Assessment"

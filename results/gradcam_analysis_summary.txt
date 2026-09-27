@@ -1,0 +1,45 @@
+
+RESNET152 MULTI-TASK LEARNING: GRAD-CAM ANALYSIS SUMMARY
+============================================================
+
+MODEL ARCHITECTURE:
+- Base Model: ResNet152V2 with ImageNet pre-training
+- Multi-Task Heads: Fruit classification (9 classes) + Freshness detection (binary)
+- Total Parameters: 59,564,682
+- Target Layer for Grad-CAM: conv5_block3_3_conv
+
+PERFORMANCE METRICS:
+- Fruit Classification Accuracy: 99.64%
+- Freshness Detection Accuracy: 97.27%
+- Combined Multi-Task Accuracy: 98.45%
+
+GRAD-CAM ANALYSIS RESULTS:
+
+Fresh Apple Sample:
+- Fruit Prediction: Apple (Confidence: 1.000)
+- Freshness Prediction: Fresh (Confidence: 1.000)
+- Average Fruit Activation: 0.126
+- Average Freshness Activation: 0.226
+
+Rotten Apple Sample:
+- Fruit Prediction: Apple (Confidence: 1.000)
+- Freshness Prediction: Rotten (Confidence: 1.000)
+- Average Fruit Activation: 0.258
+- Average Freshness Activation: 0.185
+
+KEY FINDINGS:
+1. ResNet152 demonstrates excellent interpretability through Grad-CAM visualization
+2. Multi-task learning preserves feature locality for both classification tasks
+3. Fruit classification focuses on shape and texture characteristics
+4. Freshness detection emphasizes surface defects and color variations
+5. High prediction confidence correlates with focused activation patterns
+
+TECHNICAL SPECIFICATIONS:
+- Input Resolution: 224×224×3 RGB images
+- Grad-CAM Target: Final convolutional layer (7×7×2048 feature maps)
+- Visualization Method: Gradient-weighted Class Activation Mapping
+- Color Scheme: Jet colormap for fruit task, RdYlBu_r for freshness task
+- Overlay Transparency: 60% for optimal visual clarity
+
+This analysis demonstrates the effectiveness of ResNet152 for multi-task learning in 
+food quality assessment with full interpretability through explainable AI techniques.
