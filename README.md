@@ -207,8 +207,8 @@ All 9 candidate models were trained and benchmarked under identical data splits 
 
 ### 1. Clone & Set Up Environment
 ```bash
-git clone https://github.com/RifatHossaiN47/fruit-freshness-multitask-xai.git
-cd fruit-freshness-multitask-xai
+git clone https://github.com/RifatHossaiN47/conference-fruit-freshness-xai.git
+cd conference-fruit-freshness-xai
 
 # Create virtual environment
 python -m venv venv

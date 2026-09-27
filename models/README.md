@@ -33,14 +33,14 @@ GitHub enforces a strict **100 MB maximum file size limit** for standard Git com
 3. Users can download it directly:
    ```bash
    # Download into the models directory
-   curl -L -o models/ResNet152.keras "https://github.com/RifatHossaiN47/fruit-freshness-multitask-xai/releases/download/v1.0.0/ResNet152.keras"
+   curl -L -o models/ResNet152.keras "https://github.com/RifatHossaiN47/conference-fruit-freshness-xai/releases/download/v1.0.0/ResNet152.keras"
    ```
 
 ### Option B: Hugging Face Model Hub
 You can upload the model directly to your Hugging Face Space or Model repository:
 ```python
 from huggingface_hub import hf_hub_download
-hf_hub_download(repo_id="RifatHossaiN47/fruit-freshness-resnet152", filename="ResNet152.keras", local_dir="models")
+hf_hub_download(repo_id="RifatHossaiN47/conference-fruit-freshness-xai", filename="ResNet152.keras", local_dir="models")
 ```
 
 ### Option C: Git LFS (Large File Storage)
