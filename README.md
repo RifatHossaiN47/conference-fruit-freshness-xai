@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🍎 Multi-Task Fruit & Freshness Classification with Grad-CAM Explainability
+# Multi-Task Fruit Classification & Freshness Detection with Grad-CAM
 
 ### IEEE ICCIT 2025 Official Research Implementation
 
@@ -13,60 +13,60 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 <p align="center">
-  <b>A unified, explainable deep learning framework that simultaneously identifies fruit variety and evaluates freshness state in a single forward pass.</b>
+  <b>A unified deep learning framework that simultaneously identifies fruit variety and evaluates freshness state in a single forward pass, with visual explanations via dual-head Grad-CAM.</b>
 </p>
 
-[**Read on IEEE Xplore**](https://ieeexplore.ieee.org/abstract/document/11491294) • [**Read Paper (PDF)**](docs/IEEE_ICCIT2025_Conference_Paper.pdf) • [**Live Hugging Face Demo**](https://huggingface.co/spaces/nahinfarhan/fruit-classifier) • [**Benchmark Results**](#-comprehensive-benchmark-evaluation) • [**Explainable AI (Grad-CAM)**](#-explainable-ai-with-grad-cam) • [**Citation**](#-citation)
+[Read on IEEE Xplore](https://ieeexplore.ieee.org/abstract/document/11491294) • [Read Paper (PDF)](docs/IEEE_ICCIT2025_Conference_Paper.pdf) • [Live Hugging Face Demo](https://huggingface.co/spaces/nahinfarhan/fruit-classifier) • [Benchmark](#benchmark-results) • [Grad-CAM](#explainability-with-grad-cam) • [Citation](#citation)
 
 </div>
 
 ---
 
-## ⚡ 30-Second Summary for Recruiters & Researchers
+## Overview
 
-* **The Problem:** Conventional automated sorting in agriculture requires running separate computer vision models for product identification and quality inspection, incurring double computational overhead and high latency.
-* **Our Solution:** A **Multi-Task ResNet152V2** architecture featuring a shared feature representation trunk and dual task-specific classification heads (9-class fruit type + binary freshness assessment).
-* **The Breakthrough:**
-  * **99.64%** Fruit Classification Accuracy across 9 varieties
-  * **97.27%** Freshness Detection Accuracy (**0.998 ROC-AUC**)
-  * **98.45%** Combined Multi-Task Test Accuracy
-  * **Outperforms 8 state-of-the-art architectures**, including Vision Transformers (ViT), ConvNeXt, DenseNet, InceptionV3, and YOLOv3.
-* **Explainability (XAI):** Integrated **dual-head Grad-CAM** proving the network evaluates morphological structure (shape, stem) for fruit identity while isolating surface blemishes and necrotic lesions for freshness.
+* **Problem:** In agricultural packaging and food sorting, identifying the fruit type and inspecting its freshness are usually handled by two separate models. Running two models sequentially doubles inference time and computational cost.
+* **Our Approach:** We designed a **Multi-Task ResNet152V2** network with a shared convolutional trunk and two specialized output heads: one for 9-class fruit categorization and one for binary freshness assessment (fresh vs. rotten).
+* **Key Results:**
+  * **99.64%** fruit classification accuracy across 9 categories.
+  * **97.27%** freshness detection accuracy (**0.998 ROC-AUC**).
+  * **98.45%** combined multi-task test accuracy.
+  * Evaluated against 8 other architectures (including Vision Transformers, ConvNeXt, DenseNet, InceptionV3, and YOLOv3), achieving the lowest error and highest overall accuracy.
+* **Explainability:** We integrated **dual-head Grad-CAM** to verify that the model learns genuine physical cues: the fruit head focuses on shape, calyx, and stem geometry, while the freshness head isolates skin discoloration and rot lesions.
 
 ---
 
-## 🚀 Key Highlights & Performance Snapshot
+## Performance Summary
 
-| Metric | Proposed ResNet152V2 | Nearest Competitor (DenseNet121) | Relative Advantage |
+| Metric | Proposed (ResNet152V2) | DenseNet121 (Second Best) | Difference |
 | :--- | :---: | :---: | :---: |
-| **Fruit Classification Accuracy** | **99.64%** | 99.44% | **+0.20%** |
-| **Freshness Detection Accuracy** | **97.27%** | 95.66% | **+1.61%** |
-| **Combined Multi-Task Accuracy** | **98.45%** | 97.55% | **+0.90%** |
-| **Freshness ROC-AUC** | **0.998** | 0.985 | **Top Calibration** |
-| **Test Loss** | **0.028** | 0.040 | **-30% Lower Error** |
-| **Inference Efficiency** | **Single Model** | Separate Pipelines | **2× Latency Reduction** |
+| **Fruit Classification Accuracy** | **99.64%** | 99.44% | +0.20% |
+| **Freshness Detection Accuracy** | **97.27%** | 95.66% | +1.61% |
+| **Combined Accuracy** | **98.45%** | 97.55% | +0.90% |
+| **Freshness ROC-AUC** | **0.998** | 0.985 | +0.013 |
+| **Test Loss** | **0.028** | 0.040 | -0.012 |
+| **Pipeline** | **Single Model** | Two Separate Models | 1 forward pass |
 
 <div align="center">
   <img src="assets/model_comparison_summary.png" alt="Model Comparison Summary" width="92%">
-  <p><i>Figure 1: Benchmark evaluation across 9 deep learning architectures showing accuracy and loss trajectories.</i></p>
+  <p><i>Figure 1: Accuracy and loss trajectories across all 9 benchmarked architectures.</i></p>
 </div>
 
 ---
 
-## 🔍 Explainable AI with Grad-CAM
+## Explainability with Grad-CAM
 
-Deep learning models deployed in food safety and supply chain automation require trust and interpretability. We employ **Gradient-weighted Class Activation Mapping (Grad-CAM)** at the final convolutional block (`conv5_block3_3_conv`) to inspect the spatial attention of both classification branches:
+Deep learning models used in food inspection cannot be black boxes. We applied **Gradient-weighted Class Activation Mapping (Grad-CAM)** at the final convolutional block (`conv5_block3_3_conv`) to inspect what each head focuses on:
 
 <div align="center">
   <img src="assets/gradcam_comparative_analysis.png" alt="Comparative Grad-CAM Analysis" width="95%">
-  <p><i>Figure 2: Dual-head Grad-CAM activations: the fruit branch attends to global morphology while the freshness branch pinpoints rot lesions.</i></p>
+  <p><i>Figure 2: Dual-head Grad-CAM heatmaps showing how each branch specializes on different visual features.</i></p>
 </div>
 
-### Scientific Takeaways:
-1. **Task-Disentangled Representations:** Although both branches share the same convolutional backbone, the gradients reveal clear specialization:
-   * **Fruit Identification Head:** Focuses on overall silhouette, aspect ratio, calyx, and stem geometry.
-   * **Freshness Assessment Head:** Concentrates on localized discoloration, surface bruises, fungal spots, and necrotic tissues.
-2. **Confidence-Grounded Saliency:** On healthy fruit samples, freshness activations remain smoothly distributed across intact skin; on defective samples, attention concentrates sharply on rot boundaries.
+### Observations:
+1. **Branch Specialization:** Even though both branches share the same feature extractor, the gradient signals diverge clearly:
+   * **Fruit Head:** Attends to structural features like overall shape, aspect ratio, and stem position.
+   * **Freshness Head:** Attends directly to surface defects, dark spots, fungal growth, and bruised skin.
+2. **Localization:** On fresh samples, freshness activations remain evenly distributed over intact skin. On rotten samples, the activations tightly localize around the boundaries of visible decay.
 
 <div align="center">
   <img src="assets/gradcam_fresh_apple.png" alt="Fresh Apple Grad-CAM" width="48%">
@@ -75,35 +75,33 @@ Deep learning models deployed in food safety and supply chain automation require
 
 ---
 
-## 🌐 Interactive Web Application
+## Live Demo & Web App
 
-We engineered a real-time web application using **Streamlit** (also deployed live on **Hugging Face Spaces**) that supports both batch image uploads and live webcam capture.
+You can test the trained model directly in your browser without any setup:
 
-> 🚀 **Live Demo on Hugging Face Spaces:**  
-> Test the model instantly in your browser without any installation:  
-> 👉 **[https://huggingface.co/spaces/nahinfarhan/fruit-classifier](https://huggingface.co/spaces/nahinfarhan/fruit-classifier)**
+👉 **[Live Hugging Face Spaces Demo](https://huggingface.co/spaces/nahinfarhan/fruit-classifier)**
 
 <div align="center">
   <img src="assets/web_demo_fresh.png" alt="Streamlit Web App - Fresh Prediction" width="48%">
   <img src="assets/web_demo_rotten.png" alt="Streamlit Web App - Rotten Prediction" width="48%">
-  <p><i>Figure 3: Interactive real-time deployment demonstrating fruit classification and freshness prediction with instant explainability.</i></p>
+  <p><i>Figure 3: Web interface running real-time inference with dual predictions and Grad-CAM visualizations.</i></p>
 </div>
 
-Run the web app locally in seconds:
+To run the app locally:
 ```bash
 streamlit run app.py
 ```
 
 ---
 
-## 🏗️ Multi-Task Architecture
+## Model Architecture
 
-The proposed network leverages **ResNet152V2** pre-trained on ImageNet, unfreezing the terminal 30 layers for task-specific transfer learning. Extracted feature maps pass through a shared trunk before bifurcating into two independent decision heads:
+The model uses a **ResNet152V2** backbone pre-trained on ImageNet, with the last 30 layers fine-tuned. Feature representations pass through a shared dense layer before splitting into two independent prediction heads:
 
 ```mermaid
 flowchart TD
     A["Input Image (224 × 224 × 3)"] --> B["ResNet152V2 Backbone<br/>(ImageNet Pretrained)"]
-    B --> C["conv5_block3_3_conv<br/>(Grad-CAM Saliency Target: 7×7×2048)"]
+    B --> C["conv5_block3_3_conv<br/>(Grad-CAM Target Layer: 7×7×2048)"]
     C --> D["Global Average Pooling (2048-d)"]
     
     subgraph Shared_Trunk ["Shared Trunk"]
@@ -111,14 +109,14 @@ flowchart TD
         E --> F["Shared Dense (256, ReLU)"]
     end
     
-    subgraph Fruit_Branch ["Branch 1: Fruit Identification"]
+    subgraph Fruit_Branch ["Fruit Branch"]
         F --> G["Dense (128, ReLU) + Dropout (0.3)"]
-        G --> H["Dense (9, Softmax)<br/><b>Fruit Class Output</b>"]
+        G --> H["Dense (9, Softmax)<br/><b>Fruit Class</b>"]
     end
     
-    subgraph Freshness_Branch ["Branch 2: Freshness Assessment"]
+    subgraph Freshness_Branch ["Freshness Branch"]
         F --> I["Dense (64, ReLU) + Dropout (0.3)"]
-        I --> J["Dense (1, Sigmoid)<br/><b>Fresh vs. Rotten Output</b>"]
+        I --> J["Dense (1, Sigmoid)<br/><b>Fresh vs. Rotten</b>"]
     end
 
     classDef primary fill:#2563EB,stroke:#1D4ED8,stroke-width:2px,color:#fff;
@@ -132,85 +130,70 @@ flowchart TD
     class I,J branchB;
 ```
 
-### Multi-Task Objective Function:
+### Loss Function:
 $$\mathcal{L}_{\text{total}} = \alpha \cdot \mathcal{L}_{\text{fruit}} + \beta \cdot \mathcal{L}_{\text{freshness}}$$
 
-Where $\alpha = 0.7$ (Categorical Cross-Entropy for 9 fruit classes) and $\beta = 0.3$ (Binary Cross-Entropy for Fresh vs. Rotten state).
+where $\alpha = 0.7$ (Categorical Cross-Entropy) and $\beta = 0.3$ (Binary Cross-Entropy).
 
 ---
 
-## 📊 Comprehensive Benchmark Evaluation
+## Benchmark Results
 
-All 9 candidate models were trained and benchmarked under identical data splits (70% train, 20% validation, 10% test) on the **30,357-image Kaggle dataset**:
+All 9 models were evaluated under identical data splits (70% train, 20% validation, 10% test) on the 30,357-image dataset:
 
-| Rank | Model Architecture | Test Fruit Acc | Test Fresh Acc | Combined Test Acc | Test Loss |
-| :---: | :--- | :---: | :---: | :---: | :---: |
-| 🥇 | **ResNet152V2 (Proposed)** | **99.64%** | **97.27%** | **98.45%** | **0.0282** |
-| 🥈 | DenseNet121 | 99.44% | 95.66% | 97.55% | 0.0400 |
-| 🥉 | InceptionV3 | 99.08% | 95.52% | 97.30% | 0.0495 |
-| 4 | ConvNeXt-Base | 96.91% | 91.84% | 94.37% | 0.1415 |
-| 5 | Vision Transformer (ViT-Base) | 84.14% | 78.81% | 81.47% | 0.4447 |
-| 6 | VGG16 | 92.96% | 56.76% | 74.86% | 0.3308 |
-| 7 | Custom CNN (Baseline) | 71.54% | 68.08% | 69.81% | 0.6280 |
-| 8 | YOLOv3 Backbone + FC | 58.51% | 59.86% | 59.18% | 0.9275 |
-| 9 | EfficientNet-B4 | 45.61% | 56.01% | 50.81% | 1.1351 |
+| Model | Fruit Acc (%) | Freshness Acc (%) | Combined Acc (%) | Test Loss |
+| :--- | :---: | :---: | :---: | :---: |
+| **ResNet152V2 (Proposed)** | **99.64** | **97.27** | **98.45** | **0.0282** |
+| DenseNet121 | 99.44 | 95.66 | 97.55 | 0.0400 |
+| InceptionV3 | 99.08 | 95.52 | 97.30 | 0.0495 |
+| ConvNeXt-Base | 96.91 | 91.84 | 94.37 | 0.1415 |
+| Vision Transformer (ViT-Base) | 84.14 | 78.81 | 81.47 | 0.4447 |
+| VGG16 | 92.96 | 56.76 | 74.86 | 0.3308 |
+| Custom CNN Baseline | 71.54 | 68.08 | 69.81 | 0.6280 |
+| YOLOv3 Backbone + FC | 58.51 | 59.86 | 59.18 | 0.9275 |
+| EfficientNet-B4 | 45.61 | 56.01 | 50.81 | 1.1351 |
 
 <div align="center">
   <img src="assets/confusion_matrix_fruit.png" alt="Fruit Confusion Matrix" width="48%">
   <img src="assets/confusion_matrix_freshness.png" alt="Freshness Confusion Matrix" width="48%">
-  <p><i>Figure 4: Confusion matrices on unseen test set for Fruit Variety (left) and Freshness State (right).</i></p>
+  <p><i>Figure 4: Confusion matrices on the test set for Fruit Variety (left) and Freshness (right).</i></p>
 </div>
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```text
-├── assets/                       # High-resolution figures for README & documentation
-│   ├── gradcam_comparative_analysis.png
-│   ├── model_comparison_summary.png
-│   ├── confusion_matrix_fruit.png
-│   ├── confusion_matrix_freshness.png
-│   ├── roc_curve_freshness.png
-│   ├── resnet152_classification_report.png
-│   ├── methodology_pipeline.png
-│   ├── web_demo_fresh.png
-│   └── web_demo_rotten.png
+├── assets/                       # Figures for documentation and results
 ├── diagrams/                     # Source Draw.io architectural diagrams
-│   ├── resnet152v2_multitask_architecture.drawio
-│   ├── methodology_flowchart.drawio
-│   └── paper_figure_layouts.drawio
-├── docs/                         # Conference presentation and credentials
-│   ├── IEEE_ICCIT2025_Conference_Paper.pdf  # Full Camera-Ready Research Paper
+├── docs/                         # Conference paper, presentation slides, and credentials
+│   ├── IEEE_ICCIT2025_Conference_Paper.pdf
 │   ├── ICCIT2025_Conference_Certificate.pdf
 │   ├── Conference_Presentation_Slides.pptx
 │   └── Conference_Presentation_Slides.pdf
-├── models/                       # Model storage and release instructions
-│   └── README.md                 # Download guide for ResNet152.keras (348.7 MB)
-├── notebooks/                    # Interactive research notebooks
-│   ├── fruit_freshness_multitask_xai.ipynb   # Complete conference training & evaluation code
-│   └── archive/                  # Earlier iterations & PDF exports
-├── results/                      # Raw metrics and baseline evaluation plots
-│   ├── multi_task_model_comparison_results.csv
-│   ├── gradcam_analysis_summary.txt
-│   └── baseline_plots/           # Individual training curves for all 9 models
+├── models/                       # Model configuration & weight download guide
+│   └── README.md
+├── notebooks/                    # Jupyter notebooks for training and evaluation
+│   ├── fruit_freshness_multitask_xai.ipynb
+│   └── archive/
+├── results/                      # Evaluation metrics and baseline plots
 ├── src/                          # Modular Python source code
-│   ├── __init__.py               # Package metadata & label constants
-│   ├── model.py                  # Model architecture definition & compilation
+│   ├── __init__.py               # Label mappings and constants
+│   ├── model.py                  # Model architecture and compilation
 │   ├── gradcam.py                # Dual-head Grad-CAM implementation
-│   └── predict.py                # Standalone CLI inference script
-├── app.py                        # Interactive Streamlit web application
-├── CITATION.cff                  # Native GitHub citation metadata
-├── LICENSE                       # MIT Open-Source License
-├── requirements.txt              # Pinned environment dependencies
-└── README.md                     # Project overview and documentation
+│   └── predict.py                # CLI inference script
+├── app.py                        # Streamlit web application
+├── CITATION.cff                  # Citation metadata
+├── LICENSE                       # MIT License
+├── requirements.txt              # Python dependencies
+└── README.md                     # Documentation
 ```
 
 ---
 
-## 🛠️ Quickstart & Reproducibility
+## Getting Started
 
-### 1. Clone & Set Up Environment
+### 1. Environment Setup
 ```bash
 git clone https://github.com/RifatHossaiN47/conference-fruit-freshness-xai.git
 cd conference-fruit-freshness-xai
@@ -223,25 +206,24 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 2. Run the Streamlit Web Application
+### 2. Run the Web Application
 ```bash
 streamlit run app.py
 ```
 
-### 3. Run Inference from the Command Line
+### 3. Command-Line Inference
 ```bash
-# Predict fruit type & freshness with Grad-CAM heatmaps
 python src/predict.py --image path/to/sample.jpg --gradcam
 ```
 
-### 4. Explore Research Notebook
-Open `notebooks/fruit_freshness_multitask_xai.ipynb` in Jupyter Notebook, VS Code, Google Colab, or Kaggle to reproduce training, validation, and figure generation.
+### 4. Training Notebook
+The complete training, evaluation, and plotting workflow is available in `notebooks/fruit_freshness_multitask_xai.ipynb`.
 
 ---
 
-## 📖 Citation
+## Citation
 
-If this research or codebase assists your work, please cite our IEEE ICCIT 2025 paper:
+If you find this work or codebase useful, please cite our paper:
 
 ```bibtex
 @INPROCEEDINGS{11491294,
@@ -249,34 +231,29 @@ If this research or codebase assists your work, please cite our IEEE ICCIT 2025 
   booktitle={2025 28th International Conference on Computer and Information Technology (ICCIT)}, 
   title={A Multi Task Deep Learning Model for Fruit Detection and Freshness Classification with GradCAM Explainability}, 
   year={2025},
-  volume={},
-  number={},
   pages={347-352},
-  keywords={Central Processing Unit;Feedback;Circuits;Location awareness;Protocols;Mobile communication;HTTP;Convolutional neural networks;Deep learning;Learning (artificial intelligence);Food Quality Assessment;Multi-task CNN;Transfer learning;Grad-CAM;Real-time deployment},
   doi={10.1109/ICCIT68739.2025.11491294},
   publisher={IEEE}
 }
 ```
 
-### IEEE Xplore Link:
-👉 **[https://ieeexplore.ieee.org/abstract/document/11491294](https://ieeexplore.ieee.org/abstract/document/11491294)**
+Paper on IEEE Xplore: [https://ieeexplore.ieee.org/abstract/document/11491294](https://ieeexplore.ieee.org/abstract/document/11491294)
 
 ---
 
-## 👥 Authors & Acknowledgments
+## Authors
 
-* **Md Rifat Hossen** ([IEEE Profile](https://ieeexplore.ieee.org/author/37089928121) • `rifat8851@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
-* **Md Nahian Abdullah** ([IEEE Profile](https://ieeexplore.ieee.org/author/628425155997373) • `mdnahianabdullah95@gmail.com`) — *Dept. of Electrical and Electronic Engineering, CUET*
-* **MD Nahin Farhan** ([IEEE Profile](https://ieeexplore.ieee.org/author/190924578641229) • `nahinfarhan.czs@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
-* **Nino Chakma** ([IEEE Profile](https://ieeexplore.ieee.org/author/334014166865499) • `www.nino39@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
-* **Denesh Barua Pantho** ([IEEE Profile](https://ieeexplore.ieee.org/author/776320405692555) • `pantho625@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
+* **Md Rifat Hossen** ([IEEE](https://ieeexplore.ieee.org/author/37089928121) • `rifat8851@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
+* **Md Nahian Abdullah** ([IEEE](https://ieeexplore.ieee.org/author/628425155997373) • `mdnahianabdullah95@gmail.com`) — *Dept. of Electrical and Electronic Engineering, CUET*
+* **MD Nahin Farhan** ([IEEE](https://ieeexplore.ieee.org/author/190924578641229) • `nahinfarhan.czs@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
+* **Nino Chakma** ([IEEE](https://ieeexplore.ieee.org/author/334014166865499) • `www.nino39@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
+* **Denesh Barua Pantho** ([IEEE](https://ieeexplore.ieee.org/author/776320405692555) • `pantho625@gmail.com`) — *Dept. of Computer Science and Engineering, CUET*
 
-**Institution:** Chittagong University of Engineering and Technology (CUET), Chittagong, Bangladesh.
-
-*Presented at the **2025 28th International Conference on Computer and Information Technology (ICCIT)**, Cox's Bazar, Bangladesh.*
+**Institution:** Chittagong University of Engineering and Technology (CUET), Chittagong, Bangladesh.  
+*Presented at the 2025 28th International Conference on Computer and Information Technology (ICCIT), Cox's Bazar, Bangladesh.*
 
 ---
 
-<div align="center">
-  <sub>Built with ❤️ for reproducible AI research in food quality assessment and smart agriculture.</sub>
-</div>
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
